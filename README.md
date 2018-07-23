@@ -7,6 +7,9 @@
 
 ![gif](https://cdn.chenrf.com/abc.gif)
 
+### 小程序二维码
+
+![前端读者](http://cdn.chenrf.com/2018723213248.png)
 
 ### 使用方法
 ```html
@@ -65,7 +68,6 @@ lastTab: "solar"    //最后选择的是农历（lunar）还是公历（solar）
 lunarStr: "农历:1991年十一月廿六 时辰未知"
 solarStr: "公历:1991年12月31日 时辰未知"
 thisStr: "公历:1991年12月31日 时辰未知"
-
 ```
 
 
