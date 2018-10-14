@@ -15,7 +15,7 @@ const lunarMaxDay = maxLunar.lDay;
 // 默认初始配置数据
 const dafaultConfig = {
     confirm: true,//是否需要确认
-    date: '1991-12-31',//默认日期(新历)
+    date: '1991-1-6',//默认日期(新历)
     hour: '-1',//默认时辰,未知
     showHour: true,//是否有时辰选项
     lunar: true,//默认展示农历
@@ -143,7 +143,7 @@ Component({
         _solarLunarChange(event) {
             const type = event.currentTarget.dataset.type;
             const thisDate = this.data.returnDate;
-            // console.log(this.data.returnDate);
+            
             // 农历下点击公历切换
             if(this.data.lunarTab !== true && type=='lunar'){
                 this.setData({
@@ -338,7 +338,7 @@ Component({
             // 转换公历to农历
             const lunarData = solarLunar.solar2lunar(dateArr[0], dateArr[1], dateArr[2]);
             // 该年是否有闰月，0没有
-            const leapMonth = solarLunar.leapMonth(dateArr[0]);
+            const leapMonth = solarLunar.leapMonth(lunarData.lYear);
             // 月份数组
             let monthArr = [];
             for (let i = 1; i <= 12; i++) {
@@ -369,7 +369,7 @@ Component({
             // 设置位置
             let selectArr = [
                 lunarData.lYear-1940, 
-                (lunarData.isLeap && lunarData.lMonth >= leapMonth) ? lunarData.lMonth : lunarData.lMonth-1, 
+                (leapMonth > 0 && leapMonth <= lunarData.lMonth) ? lunarData.lMonth : lunarData.lMonth-1, 
                 lunarData.lDay-1, 
                 parseInt(hour)+1
             ];
