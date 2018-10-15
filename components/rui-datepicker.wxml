@@ -1,5 +1,5 @@
 <view class="datepicker_shade {{isShow ? 'datepicker_shade_active' : ''}}"></view>
-<view class="datepicker_wrap {{isShow ? 'datepicker_wrap_active' : ''}}">
+<view class="datepicker_wrap {{isShow ? 'datepicker_wrap_active' : ''}}" catchtouchmove="handleStop">
     <view class="datepicker_topinfo">{{!hiddenConfirm ? '确认日期' : lunarTab?returnDate.lunarStr:returnDate.solarStr}}</view>
     <view class="datepicker_select" hidden="{{!hiddenConfirm}}">
     	<view class="datepicker_class">

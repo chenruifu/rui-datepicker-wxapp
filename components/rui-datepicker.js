@@ -167,6 +167,7 @@ Component({
                 //在农历下
                 // 该年是否有闰月，0没有
                 const leapMonth = solarLunar.leapMonth(selectArr[0]+1940);
+                const oldMonthArr = this.data.monthArr;
                 // 刷新月份数组
                 let monthArr = [];
                 for (let i = 1; i <= 12; i++) {
@@ -194,18 +195,33 @@ Component({
                         }
                     }
                 }else{
-                    //没有闰月，+1
-                    maxDay = solarLunar.monthDays(selectArr[0]+1940, selectArr[1]+1)
+                    //没有闰月，+1 (有闰月切换没闰月最大值处理)
+                    let thisMonth = (selectArr[1] + 1) > monthArr.length ? monthArr.length : (selectArr[1] + 1);
+                    maxDay = solarLunar.monthDays(selectArr[0]+1940, thisMonth);
                 }
                 for (let i = 1; i <= maxDay; i++) {
                     dayArr.push(this._getLunarName('day',i));
+                }
+                // 年切换月份位置修正：有闰年 -> 没闰年
+                if(oldMonthArr.length > monthArr.length){
+                    let oldLeapMonth = 0;
+                    for(let i = 0, max = oldMonthArr.length; i < max; i++){
+                        if('' + oldMonthArr[i].indexOf('闰') >= 0){
+                            oldLeapMonth = i;
+                        }
+                    }
+                    selectArr[1] = ((selectArr[1] + 1) > oldLeapMonth) ? selectArr[1] -1 : selectArr[1];
+                }
+                // 年份切换月份位置修正：没闰年 -> 有闰年
+                if(oldMonthArr.length < monthArr.length){
+                    selectArr[1] = ((selectArr[1] + 1) > leapMonth) ? selectArr[1] +1 : selectArr[1];
                 }
                 // 判断是否超出月份最大值(有闰年切换没闰年的情况)
                 selectArr[1] = selectArr[1] >= monthArr.length ? (monthArr.length-1) : selectArr[1];
                 // 判断是否超出日期最大值
                 selectArr[2] = selectArr[2] >= maxDay ? maxDay-1 : selectArr[2];
                 // 判断到达年份最大
-                if(selectArr[0] == thisYear-1940){
+                if(selectArr[0] == thisYear - 1940){
                     // 有无闰月
                     if(leapMonth > 0){
                         selectArr[1] = selectArr[1] > lunarMaxMonth ? lunarMaxMonth : selectArr[1];
@@ -220,13 +236,12 @@ Component({
                             selectArr[2] = lunarMaxDay - 1;
                         }
                     }
-
-                } 
+                }
                 // 更新+最大值选择
                 this.setData({
-                    selectArr: selectArr,
                     monthArr: monthArr,
-                    dayArr: dayArr
+                    dayArr: dayArr,
+                    selectArr: selectArr
                 })
             }else{
                 //在公历下
@@ -412,7 +427,10 @@ Component({
                 hourArr: hourArr,
                 selectArr: selectArr
             })
+        },
+        // 阻塞事件冒泡，底层滑动
+		handleStop() {
+            return false;
         }
-		
     }
 })
