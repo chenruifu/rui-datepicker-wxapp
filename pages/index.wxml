@@ -1,4 +1,4 @@
-  <rui-datepicker id="ruiDatepicker" bind:confirm="dateConfirm"></rui-datepicker>
+<rui-datepicker id="ruiDatepicker" bind:confirm="dateConfirm"></rui-datepicker>
 
 <view class="header">
 	<view class="h1">公农历日期选择器</view>
@@ -17,6 +17,10 @@
 		<view class="p">带时辰（不需要确认）</view>
 		<input type="text" placeholder="请选择日期" value="{{dateStr3}}" disabled="true" bindtap="showDatepicker3" />
 	</view>
-	<button class="date_submit" formType="submit">表单提交</button>
 </form>
-<view class="" style="height: 500px">sgsdgsd </view>
+<view class="fe_duzhe">
+	<view>
+		<text>前端读者</text>(欢迎关注，技术文刊日更)
+	</view>
+	<image mode="widthFix" src="../qiniu_images/fe_duzhe.jpg" bindtap="openImage"></image>
+</view>

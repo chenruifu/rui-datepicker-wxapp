@@ -54,6 +54,12 @@ Page({
         json['dateStr'+thisDatePickerId] = event.detail.thisStr;
         // 更新数据
 		this.setData(json);
-    console.log(event);
-	}
+        console.log(event);
+	},
+    // 打开前端读者二维码图片
+    openImage() {
+        wx.previewImage({
+            urls: ['http://cdn.chenrf.com/0.jpg']
+        })
+    }
 })
